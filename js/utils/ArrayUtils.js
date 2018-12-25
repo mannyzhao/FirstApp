@@ -17,4 +17,15 @@ export default class ArrayUtils {
         }
         array.push(item);
     }
+
+
+    static clone(from){
+        if (!from) return [];
+        let newArray=[];
+        for (let i = 0,len=newArray.length; i <len ; i++) {
+            newArray[i]=from[i];
+        }
+
+        return newArray;
+    }
 }

@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
+    Alert,
 } from 'react-native';
 import NavigationBar from "../../common/NavigationBar";
 import ViewUtils from "../../utils/ViewUtils";
@@ -39,7 +40,7 @@ export default class CustomKeyPage extends Component {
                 <NavigationBar
                     title={'自定义标签'}
                     statusBar={{backgroundColor: "#2196F3"}}
-                    leftButton={ViewUtils.getLeftButton(() => this.onSave())}
+                    leftButton={ViewUtils.getLeftButton(() => this.onBack())}
                     rightButton={rightButton}
                 />
 
@@ -55,13 +56,29 @@ export default class CustomKeyPage extends Component {
     }
 
     onSave() {
+        this.languagedao.save(this.state.dataArray);
+        this.props.navigator.pop();
+    }
+
+    onBack(){
         if (this.changeValues.length===0) {
             this.props.navigator.pop();
             return;
         }
 
-        this.languagedao.save(this.state.dataArray);
-        this.props.navigator.pop();
+        Alert.alert('提示','要保存修改吗？',
+
+            [
+                {
+                    text:'不保存',onPress:()=>{ this.props.navigator.pop()},style:'cancel'
+                },
+                {
+                    text: '保存',onPress:()=>{this.onSave()},
+                }
+            ]
+
+        )
+
     }
 
     renderView() {
